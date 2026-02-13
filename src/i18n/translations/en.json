@@ -1,0 +1,62 @@
+{
+  "common": {
+    "back": "Back",
+    "settings": "Settings",
+    "about": "About",
+    "privacy": "Privacy",
+    "home": "Home",
+    "navTitle": "Navigation check",
+    "navBody": "If you are here, React Navigation worked to bring you here.",
+    "languageTitle": "Language check",
+    "languageBody": "You are seeing this text in the language you selected on the Home page.",
+    "cancel": "Cancel",
+    "open": "Open"
+  },
+  "languages": {
+    "title": "Language",
+    "subtitle": "Choose your preferred language",
+    "english": "English",
+    "turkish": "Turkish",
+    "hindi": "Hindi",
+    "portuguese": "Portuguese"
+  },
+  "home": {
+    "welcome": "Welcome 👋",
+    "subtitle": "React Native Boilerplate",
+    "boilerplateBadge": "Boilerplate",
+    "whatsIncluded": "What's included",
+    "includedHint": "Core tooling included to start fast.",
+    "reactNavigation": "React Navigation",
+    "typeSafeRouting": "Type-safe routing",
+    "nativeWind": "NativeWind",
+    "tailwindCss": "Tailwind CSS styling",
+    "typescript": "TypeScript",
+    "fullTypeSafety": "Full type safety",
+    "i18nLibrary": "i18n Localization",
+    "localizationSupport": "Multi-language support",
+    "asyncStorage": "Async Storage",
+    "asyncStorageDesc": "Local key-value storage",
+    "vectorIcons": "Vector Icons",
+    "vectorIconsDesc": "Icon library for tabs & UI",
+    "languageTestTitle": "Test i18n:",
+    "languageTestBody": "Select language to test!",
+    "languageTestLine": "Test <1>i18n</1>: Select <2>language</2> to test!",
+    "repoTitle": "Support the project",
+    "repoBody": "Like this boilerplate? Give it a star or leave a comment on GitHub.",
+    "repoButton": "Open GitHub repository",
+    "repoModalTitle": "Open GitHub?",
+    "repoModalBody": "You are about to open the repository in your browser."
+  },
+  "about": {
+    "title": "About",
+    "simpleMessage": "If you are here, React Navigation worked to bring you here."
+  },
+  "settings": {
+    "title": "Settings",
+    "simpleMessage": "If you are here, React Navigation worked to bring you here."
+  },
+  "privacy": {
+    "title": "Privacy",
+    "simpleMessage": "If you are here, React Navigation worked to bring you here."
+  }
+}

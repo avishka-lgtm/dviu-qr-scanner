@@ -1,0 +1,62 @@
+{
+  "common": {
+    "back": "Voltar",
+    "settings": "Configurações",
+    "about": "Sobre",
+    "privacy": "Privacidade",
+    "home": "Início",
+    "navTitle": "Verificação de navegação",
+    "navBody": "Se você está aqui, o React Navigation trouxe você até aqui.",
+    "languageTitle": "Verificação de idioma",
+    "languageBody": "Você está vendo este texto no idioma que escolheu na página inicial.",
+    "cancel": "Cancelar",
+    "open": "Abrir"
+  },
+  "languages": {
+    "title": "Idioma",
+    "subtitle": "Escolha seu idioma preferido",
+    "english": "Inglês",
+    "turkish": "Turco",
+    "hindi": "Hindi",
+    "portuguese": "Português"
+  },
+  "home": {
+    "welcome": "Bem-vindo 👋",
+    "subtitle": "Boilerplate React Native",
+    "boilerplateBadge": "Template",
+    "whatsIncluded": "O que vem incluso",
+    "includedHint": "Ferramentas essenciais incluídas para começar rápido.",
+    "reactNavigation": "React Navigation",
+    "typeSafeRouting": "Roteamento seguro por tipos",
+    "nativeWind": "NativeWind",
+    "tailwindCss": "Estilização com Tailwind CSS",
+    "typescript": "TypeScript",
+    "fullTypeSafety": "Total segurança de tipos",
+    "i18nLibrary": "i18n Localização",
+    "localizationSupport": "Suporte a múltiplos idiomas",
+    "asyncStorage": "Armazenamento assíncrono",
+    "asyncStorageDesc": "Armazenamento local de chave-valor",
+    "vectorIcons": "Ícones vetoriais",
+    "vectorIconsDesc": "Biblioteca de ícones para abas e interface",
+    "languageTestTitle": "Teste i18n:",
+    "languageTestBody": "Selecione o idioma para testar!",
+    "languageTestLine": "Teste <1>i18n</1>: selecione o <2>idioma</2> para testar!",
+    "repoTitle": "Apoie o projeto",
+    "repoBody": "Gostou deste boilerplate? Dê uma estrela ou deixe um comentário no GitHub.",
+    "repoButton": "Abrir GitHub Repository",
+    "repoModalTitle": "Abrir GitHub?",
+    "repoModalBody": "Você está prestes a abrir o Repository no navegador."
+  },
+  "about": {
+    "title": "Sobre",
+    "simpleMessage": "Se você chegou aqui, o React Navigation trouxe você até aqui."
+  },
+  "settings": {
+    "title": "Configurações",
+    "simpleMessage": "Se você chegou aqui, o React Navigation trouxe você até aqui."
+  },
+  "privacy": {
+    "title": "Privacidade",
+    "simpleMessage": "Se você chegou aqui, o React Navigation trouxe você até aqui."
+  }
+}

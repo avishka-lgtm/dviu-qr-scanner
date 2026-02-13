@@ -1,0 +1,62 @@
+{
+  "common": {
+    "back": "Geri",
+    "settings": "Ayarlar",
+    "about": "Hakkında",
+    "privacy": "Gizlilik",
+    "home": "Ana Sayfa",
+    "navTitle": "Gezinme kontrolü",
+    "navBody": "Buradaysan, React Navigation seni buraya getirdi.",
+    "languageTitle": "Dil kontrolü",
+    "languageBody": "Bu metni, Ana Sayfa'da seçtiğin dilde görüyorsun.",
+    "cancel": "İptal",
+    "open": "Aç"
+  },
+  "languages": {
+    "title": "Dil",
+    "subtitle": "Tercih ettiğin dili seç",
+    "english": "İngilizce",
+    "turkish": "Türkçe",
+    "hindi": "Hintçe",
+    "portuguese": "Portekizce"
+  },
+  "home": {
+    "welcome": "Hoş geldin 👋",
+    "subtitle": "React Native Şablonu",
+    "boilerplateBadge": "Şablon",
+    "whatsIncluded": "Neler Var",
+    "includedHint": "Hızlı başlamak için çekirdek araçlar dahil.",
+    "reactNavigation": "React Navigation",
+    "typeSafeRouting": "Tip güvenli yönlendirme",
+    "nativeWind": "NativeWind",
+    "tailwindCss": "Tailwind CSS stilleri",
+    "typescript": "TypeScript",
+    "fullTypeSafety": "Tam tip güvenliği",
+    "i18nLibrary": "i18n Yerelleştirme",
+    "localizationSupport": "Çok dilli destek",
+    "asyncStorage": "Asenkron Depolama",
+    "asyncStorageDesc": "Yerel anahtar-değer depolama",
+    "vectorIcons": "Vektör İkonlar",
+    "vectorIconsDesc": "Sekmeler ve arayüz için ikon kütüphanesi",
+    "languageTestTitle": "i18n Testi:",
+    "languageTestBody": "Test etmek için dil seçin!",
+    "languageTestLine": "<1>i18n</1> Testi: <2>dil</2> seçerek test edin!",
+    "repoTitle": "Projeye destek olun",
+    "repoBody": "Bu şablonu beğendin mi? GitHub'da yıldız ver veya yorum bırak.",
+    "repoButton": "GitHub Repository aç",
+    "repoModalTitle": "GitHub açılsın mı?",
+    "repoModalBody": "Repository tarayıcıda açılacak."
+  },
+  "about": {
+    "title": "Hakkında",
+    "simpleMessage": "Buradaysan, React Navigation seni buraya getirdi."
+  },
+  "settings": {
+    "title": "Ayarlar",
+    "simpleMessage": "Buradaysan, React Navigation seni buraya getirdi."
+  },
+  "privacy": {
+    "title": "Gizlilik",
+    "simpleMessage": "Buradaysan, React Navigation seni buraya getirdi."
+  }
+}
