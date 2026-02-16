@@ -1,47 +1,62 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, StatusBar } from 'react-native';
+import { View, Text, StatusBar, TouchableOpacity } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Camera, useCameraDevice, useCameraPermission, useCodeScanner } from 'react-native-vision-camera';
 import { StackScreenProps } from '@react-navigation/stack';
 import { RootStackParamList } from '../types/navigation';
+import { scanQrCode } from '../services/qr-code.service';
+import axios from 'axios';
 
-type HomeScreenProps = StackScreenProps<RootStackParamList, 'Home'>;
+type HomeScreenProps = StackScreenProps<RootStackParamList, 'Home'> & {
+  accessToken: string;
+  onRefreshAccessToken: () => Promise<string | null>;
+  onLogout: () => Promise<void>;
+};
 
-const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
-  const [qrId, setQrId] = useState('');
+const HomeScreen: React.FC<HomeScreenProps> = ({
+  navigation,
+  accessToken,
+  onRefreshAccessToken,
+  onLogout,
+}) => {
   const [isScanning, setIsScanning] = useState(false);
   const [isProcessingScan, setIsProcessingScan] = useState(false);
   const [scanError, setScanError] = useState<string | null>(null);
 
-  const mockFetchBooking = async (id: string) => {
-    await new Promise(resolve => setTimeout(resolve, 700));
-    if (id.toLowerCase().startsWith('x')) {
-      throw new Error('Ticket not found');
-    }
-    return {
-      bookingId: `BK-${id.toUpperCase()}`,
-      showTitle: 'Midnight Mirage',
-      showTime: 'Today, 7:30 PM',
-      screen: 'Screen 4 · Dolby',
-      seats: ['F10', 'F11', 'F12'],
-      customerName: 'Rahul Mehta',
-      status: 'VALID' as const,
-    };
-  };
-
-  const handleMockScan = async (overrideId?: string) => {
-    const idToUse = (overrideId ?? qrId).trim();
-    if (!idToUse) {
-      setScanError('Please enter the QR code ID');
+  const handleScan = async (encryptedData: string) => {
+    const valueToUse = encryptedData.trim();
+    if (!valueToUse) {
+      setScanError('Invalid QR content');
+      setIsProcessingScan(false);
       return;
     }
     setIsScanning(true);
     setScanError(null);
     try {
-      const data = await mockFetchBooking(idToUse);
-      navigation.navigate('BookingDetails', { booking: data });
+      const scanResult = await scanQrCode(valueToUse, accessToken);
+      navigation.navigate('BookingDetails', { scanResult });
     } catch (error: any) {
-      setScanError(error?.message || 'Unable to validate ticket');
+      if (axios.isAxiosError(error)) {
+        if (error.response?.status === 401) {
+          try {
+            const newAccessToken = await onRefreshAccessToken();
+            if (newAccessToken) {
+              const scanResult = await scanQrCode(valueToUse, newAccessToken);
+              navigation.navigate('BookingDetails', { scanResult });
+              return;
+            }
+            await onLogout();
+            return;
+          } catch {
+            await onLogout();
+            return;
+          }
+        }
+        const message = error.response?.data?.message;
+        setScanError(typeof message === 'string' ? message : 'Unable to validate ticket');
+      } else {
+        setScanError(error?.message || 'Unable to validate ticket');
+      }
     } finally {
       setIsScanning(false);
       setIsProcessingScan(false);
@@ -68,8 +83,7 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
         return;
       }
       setIsProcessingScan(true);
-      setQrId(value);
-      handleMockScan(value);
+      handleScan(value);
     },
   });
 
@@ -102,11 +116,15 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
               <Text className="text-slate-300 text-xs uppercase tracking-[0.3em]">
                 DVIU CINEMA
               </Text>
-              <View className="rounded-full bg-[#1f1f1f] px-3 py-1 border border-white/10">
+              <TouchableOpacity
+                onPress={onLogout}
+                activeOpacity={0.8}
+                className="rounded-full bg-[#1f1f1f] px-3 py-1 border border-white/10"
+              >
                 <Text className="text-[10px] uppercase tracking-[0.25em] text-[#f5b301]">
-                  Live
+                  Logout
                 </Text>
-              </View>
+              </TouchableOpacity>
             </View>
             <Text className="text-white text-3xl font-bold">
               QR Check-In

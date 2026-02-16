@@ -12,9 +12,10 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { StackScreenProps } from '@react-navigation/stack';
 import { RootStackParamList } from '../types/navigation';
+import axios from 'axios';
 
 type LoginScreenProps = StackScreenProps<RootStackParamList, 'Login'> & {
-  onLoginSuccess: () => void;
+  onLoginSuccess: (credentials: { username: string; password: string }) => Promise<void>;
 };
 
 type LoginErrors = {
@@ -27,6 +28,7 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ onLoginSuccess }) => {
   const [password, setPassword] = useState('');
   const [errors, setErrors] = useState<LoginErrors>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [loginError, setLoginError] = useState<string | null>(null);
 
   const isDisabled = useMemo(() => isSubmitting, [isSubmitting]);
 
@@ -48,9 +50,19 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ onLoginSuccess }) => {
     }
 
     setIsSubmitting(true);
+    setLoginError(null);
     try {
-      // TODO: Wire this up to the real admin login endpoint.
-      onLoginSuccess();
+      await onLoginSuccess({
+        username: username.trim(),
+        password,
+      });
+    } catch (error: any) {
+      if (axios.isAxiosError(error)) {
+        const message = error.response?.data?.message;
+        setLoginError(typeof message === 'string' ? message : 'Invalid username or password');
+      } else {
+        setLoginError(error?.message || 'Login failed');
+      }
     } finally {
       setIsSubmitting(false);
     }
@@ -75,8 +87,13 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ onLoginSuccess }) => {
             Admin Login
           </Text>
           <Text className="text-slate-400 text-sm text-center mt-2 mb-6">
-            Enter your credentials to access the admin panel
+            Enter your credentials to access the scanner
           </Text>
+          {loginError ? (
+            <Text className="text-xs text-red-400 text-center mb-4">
+              {loginError}
+            </Text>
+          ) : null}
 
           <View className="mb-4">
             <Text className="text-slate-300 text-sm font-semibold mb-2">

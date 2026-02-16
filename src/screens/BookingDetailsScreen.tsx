@@ -7,17 +7,30 @@ import { RootStackParamList } from '../types/navigation';
 type BookingDetailsProps = StackScreenProps<RootStackParamList, 'BookingDetails'>;
 
 const BookingDetailsScreen: React.FC<BookingDetailsProps> = ({ route, navigation }) => {
-  const { booking } = route.params;
+  const { scanResult } = route.params;
+  const { data } = scanResult;
+  const { booking } = data;
+
+  const customerName = [booking.user?.firstName, booking.user?.lastName]
+    .filter(Boolean)
+    .join(' ')
+    .trim() || booking.user?.email || 'Unknown';
+
+  const statusLabel = data.isValid
+    ? data.isExpired
+      ? 'EXPIRED'
+      : booking.status.toUpperCase()
+    : 'INVALID';
 
   const statusColors = useMemo(() => {
-    if (booking.status === 'VALID') {
+    if (statusLabel === 'CONFIRMED') {
       return { text: '#4ade80', bg: 'rgba(34, 197, 94, 0.18)', border: 'rgba(34, 197, 94, 0.5)' };
     }
-    if (booking.status === 'USED') {
+    if (statusLabel === 'EXPIRED') {
       return { text: '#fbbf24', bg: 'rgba(234, 179, 8, 0.18)', border: 'rgba(234, 179, 8, 0.5)' };
     }
     return { text: '#f87171', bg: 'rgba(248, 113, 113, 0.2)', border: 'rgba(248, 113, 113, 0.45)' };
-  }, [booking.status]);
+  }, [statusLabel]);
 
   return (
     <SafeAreaView className="flex-1" style={{ backgroundColor: '#0f0f0f' }}>
@@ -37,59 +50,49 @@ const BookingDetailsScreen: React.FC<BookingDetailsProps> = ({ route, navigation
                 }}
               >
                 <Text className="text-xs font-semibold" style={{ color: statusColors.text }}>
-                  {booking.status}
+                  {statusLabel}
                 </Text>
               </View>
             </View>
 
             <Text className="text-white text-2xl font-bold mb-2">
-              {booking.showTitle}
+              {booking.showInstance?.event?.name ?? 'Event'}
             </Text>
             <Text className="text-slate-300 text-sm mb-4">
-              {booking.showTime} · {booking.screen}
+              {booking.showInstance?.showDateTime ?? 'N/A'} · {booking.showInstance?.hall?.name ?? 'N/A'}
             </Text>
 
             <View className="rounded-2xl border border-white/10 bg-[#1a1a1a] p-4 mb-4">
               <View className="flex-row justify-between mb-3">
                 <Text className="text-slate-400 text-sm">Booking ID</Text>
-                <Text className="text-white text-sm font-semibold">{booking.bookingId}</Text>
+                <Text className="text-white text-sm font-semibold">{booking.bookingNumber}</Text>
               </View>
               <View className="flex-row justify-between mb-3">
                 <Text className="text-slate-400 text-sm">Customer</Text>
-                <Text className="text-white text-sm font-semibold">{booking.customerName}</Text>
+                <Text className="text-white text-sm font-semibold">{customerName}</Text>
               </View>
               <View className="flex-row justify-between mb-3">
-                <Text className="text-slate-400 text-sm">Seats</Text>
+                <Text className="text-slate-400 text-sm">Section</Text>
                 <Text className="text-white text-sm font-semibold">
-                  {booking.seats.join(', ')}
+                  {booking.section?.name ?? 'N/A'}
+                </Text>
+              </View>
+              <View className="flex-row justify-between mb-3">
+                <Text className="text-slate-400 text-sm">Amount</Text>
+                <Text className="text-white text-sm font-semibold">
+                  {booking.totalAmount} {booking.currency}
                 </Text>
               </View>
               <View className="flex-row justify-between">
                 <Text className="text-slate-400 text-sm">Status</Text>
-                <Text className="text-white text-sm font-semibold">{booking.status}</Text>
+                <Text className="text-white text-sm font-semibold">{statusLabel}</Text>
               </View>
             </View>
 
-            <View className="flex-row justify-between mb-4">
-              <TouchableOpacity
-                activeOpacity={0.85}
-                className="flex-1 rounded-2xl px-4 py-3 mr-3 border border-white/10"
-                style={{ backgroundColor: 'rgba(255, 255, 255, 0.04)' }}
-              >
-                <Text className="text-slate-100 text-center text-sm font-semibold">
-                  Mark As Used
-                </Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                activeOpacity={0.85}
-                className="flex-1 rounded-2xl px-4 py-3"
-                style={{ backgroundColor: '#f5b301' }}
-              >
-                <Text className="text-[#141414] text-center text-sm font-semibold">
-                  Approve Entry
-                </Text>
-              </TouchableOpacity>
-            </View>
+            <Text className="text-slate-400 text-xs mb-4">
+              QR ID: {data.qrCode.id} {'\n'}
+              Scanned At: {data.qrCode.scannedAt ?? 'N/A'}
+            </Text>
 
             <TouchableOpacity
               onPress={() => navigation.replace('Home')}
