@@ -34,7 +34,11 @@ const HomeScreen: React.FC<HomeScreenProps> = ({
     setScanError(null);
     try {
       const scanResult = await scanQrCode(valueToUse, accessToken);
-      navigation.navigate('BookingDetails', { scanResult });
+      if (scanResult.data.bookingType === 'restaurant') {
+        navigation.navigate('RestaurantBookingDetails', { scanResult });
+      } else {
+        navigation.navigate('BookingDetails', { scanResult });
+      }
     } catch (error: any) {
       if (axios.isAxiosError(error)) {
         if (error.response?.status === 401) {
@@ -42,7 +46,11 @@ const HomeScreen: React.FC<HomeScreenProps> = ({
             const newAccessToken = await onRefreshAccessToken();
             if (newAccessToken) {
               const scanResult = await scanQrCode(valueToUse, newAccessToken);
-              navigation.navigate('BookingDetails', { scanResult });
+              if (scanResult.data.bookingType === 'restaurant') {
+                navigation.navigate('RestaurantBookingDetails', { scanResult });
+              } else {
+                navigation.navigate('BookingDetails', { scanResult });
+              }
               return;
             }
             await onLogout();

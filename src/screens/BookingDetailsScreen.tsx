@@ -3,13 +3,14 @@ import { ScrollView, Text, TouchableOpacity, View, StatusBar } from 'react-nativ
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { StackScreenProps } from '@react-navigation/stack';
 import { RootStackParamList } from '../types/navigation';
+import { EventBooking } from '../types/qrCode';
 
 type BookingDetailsProps = StackScreenProps<RootStackParamList, 'BookingDetails'>;
 
 const BookingDetailsScreen: React.FC<BookingDetailsProps> = ({ route, navigation }) => {
   const { scanResult } = route.params;
   const { data } = scanResult;
-  const { booking } = data;
+  const booking = data.booking as EventBooking;
 
   const customerName = [booking.user?.firstName, booking.user?.lastName]
     .filter(Boolean)

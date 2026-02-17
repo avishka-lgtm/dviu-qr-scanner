@@ -6,6 +6,7 @@ import { RootStackParamList } from '../types/navigation';
 import HomeScreen from '../screens/HomeScreen';
 import LoginScreen from '../screens/LoginScreen';
 import BookingDetailsScreen from '../screens/BookingDetailsScreen';
+import RestaurantBookingDetailsScreen from '../screens/RestaurantBookingDetailsScreen';
 import {
   clearAuthTokens,
   getAccessToken,
@@ -93,6 +94,7 @@ const AppNavigator: React.FC = () => {
               )}
             </Stack.Screen>
             <Stack.Screen name="BookingDetails" component={BookingDetailsScreen} />
+            <Stack.Screen name="RestaurantBookingDetails" component={RestaurantBookingDetailsScreen} />
           </>
         ) : (
           <Stack.Screen name="Login">
